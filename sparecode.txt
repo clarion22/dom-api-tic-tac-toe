@@ -1,0 +1,6 @@
+    // const boardDiv = document.getElementById("tic-tac-toe-board");
+    // boardDiv.addEventListener("click", (event) => {
+    //     if (event.target.id.startsWith("square-")) {
+
+        }
+    // })
