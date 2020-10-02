@@ -1,7 +1,25 @@
 let currentPlayerSymbol = "x";
-const squareValues = ["", "", "", "", "", "", "", "", ""];
+let squareValues = ["", "", "", "", "", "", "", "", ""];
 let gameStatus = '';
-// const checkGameStatus = function() {
+
+const key = 'tic-tac-toe-game';
+function saveGameStatus() {
+    const state = {
+currentPlayerSymbol,
+squareValues,
+gameStatus,
+    }
+localStorage.setItem(key, JSON.stringify(state));
+}
+
+function loadGameState() {
+    const savedState = localStorage.getItem(key);
+    if (savedState === null) {
+        return;
+
+     }
+     const state = JSON.parse(savedState); 
+}
 function checkGameStatus() {
     //check the rows
     for (let i = 0; i < 9; i+=3) {
@@ -50,7 +68,12 @@ gameStatus ='None';
         document
         .getElementById('game-status')
         .innerHTML = `Winner is: ${gameStatus.toUpperCase()}`
-.getElementById('new-game').disable = false;
+
+        document
+        .getElementById('new-game').disabled = false;
+
+        document
+            .getElementById('give-up').disabled = true;
     }
 
 }
@@ -88,9 +111,30 @@ document.getElementById("new-game").addEventListener("click", event => {
     document
         .getElementById('game-status')
         .innerHTML = '';
+    for (let i = 0; i < 9; i++) {
+        document
+             .getElementById(`square-${i}`).innerHTML = '';
+    }
+    document
+            .getElementById('new-game').disabled = true;
+    document.getElementById('give-up').disabled = false;
 });
+document.getElementById("give-up").addEventListener("click", event => {
+    if (currentPlayerSymbol === "x") {
+        gameStatus = "o";
 
+    } else {
+        gameStatus = "x";
+}
 
+    document
+        .getElementById('game-status')
+        .innerHTML = `Winner is: ${gameStatus.toUpperCase()}`
+
+    document.getElementById("give-up").disabled = true;
+document.getElementById('new-game').disabled = false;
 
 
 });
+loadGame();
+})
