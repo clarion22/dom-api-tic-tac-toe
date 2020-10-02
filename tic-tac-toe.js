@@ -18,8 +18,30 @@ function loadGameState() {
         return;
 
      }
-     const state = JSON.parse(savedState); 
+     const state = JSON.parse(savedState);
+     currentPlayerSymbol = state.currentPlayerSymbol;
+     squareValues = state.squareValues;
+     gameStatus = state.gameStatus;
+
+     for (let i = 0; i < 9; i += 1) {
+if (squareValues[i] !== '') {
+    const img = document.createElement('img');
+    img.src = `/images/${squareValues[i]}.svg`;
+    document.getElementById(`square-${i}`).appendChild(img);
 }
+     }
+if(gameStatus !== '') {
+document.getElementById("game-status").innerHTML =`Winner: ${gameStatus}`;
+document.getElementById('new-game').disabled = false;
+document.getElementById('give-up').disabled = true;
+
+} else {
+    document.getElementById("game-status").innerHTML = '';
+    document.getElementById('new-game').disabled = true;
+    document.getElementById('give-up').disabled = false;
+}
+    }
+
 function checkGameStatus() {
     //check the rows
     for (let i = 0; i < 9; i+=3) {
@@ -79,6 +101,7 @@ gameStatus ='None';
 }
 
 window.addEventListener("DOMContentLoaded", (event) => {
+loadGameState();
 document.getElementById("tic-tac-toe-board")
 document.addEventListener("click", event => {
     const targetId =event.target.id;
@@ -103,6 +126,7 @@ document.addEventListener("click", event => {
         currentPlayerSymbol = "x";
     }
     checkGameStatus();
+    saveGameStatus();
 })
 document.getElementById("new-game").addEventListener("click", event => {
     currentPlayerSymbol = "x";
@@ -125,6 +149,8 @@ document.getElementById("give-up").addEventListener("click", event => {
 
     } else {
         gameStatus = "x";
+        saveGameStatus();
+
 }
 
     document
@@ -133,8 +159,8 @@ document.getElementById("give-up").addEventListener("click", event => {
 
     document.getElementById("give-up").disabled = true;
 document.getElementById('new-game').disabled = false;
+    saveGameStatus();
 
 
 });
-loadGame();
 })
