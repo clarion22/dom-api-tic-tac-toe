@@ -1,4 +1,4 @@
-const currentPlayerSymbol = "x";
+let currentPlayerSymbol = "x";
 const squareValues = ["", "", "", "", "", "", "", "", ""];
 
 window.addEventListener("DOMContentLoaded", (event) => {
@@ -13,20 +13,19 @@ document.addEventListener("click", event => {
    const squareNums = Number.parseInt(targetId[targetId.length - 1]);
     if (squareValues[squareNums] !== "") { return};
 
-    const imgx = document.createElement('img');
-    const imgo = document.createElement('img');
-    imgx.src = '/images/x.svg';
-    imgo.src = '/images/o.svg';
-    event.target.appendChild(imgx);
+    const img = document.createElement('img');
+    img.src = `/images/${currentPlayerSymbol}.svg`;
+    event.target.appendChild(img);
 
     squareValues[squareNums] = currentPlayerSymbol;
 
     if (currentPlayerSymbol === "x") {
         currentPlayerSymbol = "o";
+
     } else {
         currentPlayerSymbol = "x";
     }
-   
+
 })
 
 
